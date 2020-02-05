@@ -193,7 +193,10 @@ class NinjoTIFFWriter(ImageWriter):
                     "Saving to physical ninjo file without units defined in dataset!"
                 )
             else:
-                dataset = convert_units(dataset, units, nunits)
+                if units == nunits:
+                    logger.debug("Input and output units are the same. No unit convertion")
+                else:
+                    dataset = convert_units(dataset, units, nunits)
         return super(NinjoTIFFWriter, self).save_dataset(
             dataset, filename=filename, compute=compute, fill_value=fill_value, **kwargs
         )
