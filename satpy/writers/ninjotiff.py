@@ -172,8 +172,9 @@ class NinjoTIFFWriter(ImageWriter):
         if necessary.
         """
         nunits = kwargs.get("physic_unit", None)
-        logger.info("*** dataset {}".format(dataset))
-        logger.info("*** physic_unit: {}".format(nunits))
+        logger.debug("* dataset {}".format(dataset))
+        logger.debug("** physic_unit: {}".format(nunits))
+        logger.debug("*** kwargs: {}".format(kwargs))
         if nunits is None:
             try:
                 options = nt.get_product_config(
@@ -182,7 +183,8 @@ class NinjoTIFFWriter(ImageWriter):
                 nunits = options["physic_unit"]
             except KeyError:
                 pass
-        logger.info("*** physic_unit: {}".format(nunits))
+        logger.debug("**** options: {}".format(options))
+        logger.debug("***** physic_unit: {}".format(nunits))
         if nunits is not None:
             try:
                 units = dataset.attrs["units"]
