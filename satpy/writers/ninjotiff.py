@@ -91,6 +91,7 @@ logger = logging.getLogger(__name__)
 
 def convert_units(dataset, in_unit, out_unit):
     """Convert units of *dataset*."""
+    logger.info("*** dataset: {}, in_unit: {}, out_unit: {}".format(dataset, in_unit, out_unit))
     from pint import UnitRegistry
 
     ureg = UnitRegistry()
@@ -171,6 +172,8 @@ class NinjoTIFFWriter(ImageWriter):
         if necessary.
         """
         nunits = kwargs.get("physic_unit", None)
+        logger.info("*** dataset {}".format(dataset))
+        logger.info("*** physic_unit: {}".format(nunits))
         if nunits is None:
             try:
                 options = nt.get_product_config(
@@ -179,6 +182,7 @@ class NinjoTIFFWriter(ImageWriter):
                 nunits = options["physic_unit"]
             except KeyError:
                 pass
+        logger.info("*** physic_unit: {}".format(nunits))
         if nunits is not None:
             try:
                 units = dataset.attrs["units"]
